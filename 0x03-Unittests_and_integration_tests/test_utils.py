@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-""""""
+""""Parameterize a unit test"""
 import unittest
-import utils
+from utils import access_nested_map
 from parameterized import parameterized
 
 
