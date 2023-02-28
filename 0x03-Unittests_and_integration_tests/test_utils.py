@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """"Parameterize a unit test"""
 import unittest
-from utils import access_nested_map
+from unittest.mock import patch, Mock
+from utils import access_nested_map, get_json
 from parameterized import parameterized
 
 
@@ -26,3 +27,18 @@ class TestAccessNestedMap(unittest.TestCase):
         """context manager to test that a KeyError is raised for the inputs"""
         with self.assertRaises(KeyError):
             access_nested_map(val1, val2)
+
+
+class TestGetJson(unittest.TestCase):
+    """"""
+    @parameterized.expand([
+        ("http://example.com", {"payload": True}),
+        ("http://holberton.io", {"payload": False})
+    ])
+    def test_get_json(self, url, resp):
+        """"""
+        with patch('utils.requests') as mock_req:
+            mock_resp = Mock()
+            mock_req.get.return_value = mock_resp
+            mock_resp.json.return_value = resp
+            self.assertEqual(get_json(url), resp.json.return_value)
