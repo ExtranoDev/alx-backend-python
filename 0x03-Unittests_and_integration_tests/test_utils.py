@@ -17,3 +17,12 @@ class TestAccessNestedMap(unittest.TestCase):
     def test_access_nested_map(self, val1, val2, ans):
         """test that the method returns what it is supposed to"""
         self.assertEqual(access_nested_map(val1, val2), ans)
+
+    @parameterized.expand([
+        ({}, ("a",)),
+        ({"a": 1}, ("a", "b"))
+    ])
+    def test_access_nested_map_exception(self, val1, val2):
+        """context manager to test that a KeyError is raised for the inputs"""
+        with self.assertRaises(KeyError):
+            access_nested_map(val1, val2)
