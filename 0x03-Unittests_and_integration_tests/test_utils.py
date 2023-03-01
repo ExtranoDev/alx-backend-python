@@ -2,7 +2,7 @@
 """"Parameterize a unit test"""
 import utils
 import unittest
-from unittest.mock import patch, Mock
+from unittest.mock import patch
 from utils import access_nested_map, get_json
 from parameterized import parameterized
 
@@ -36,10 +36,8 @@ class TestGetJson(unittest.TestCase):
         ("http://example.com", {"payload": True}),
         ("http://holberton.io", {"payload": False})
     ])
-    def test_get_json(self, url, resp):
-        """Mock HTTP calls"""
-        with patch('utils.requests') as mock_req:
-            mock_resp = Mock()
-            mock_req.get.return_value = mock_resp
-            mock_resp.json.return_value = resp
-            self.assertEqual(get_json(url), resp.json.return_value)
+    @patch('test_utils.get_json')
+    def test_get_json(self, url, resp, mock_get_json):
+        """Mock test that utils.get_json returns expected result"""
+        mock_get_json.return_value = resp
+        self.assertEqual(get_json(url), resp)
