@@ -3,7 +3,7 @@
 import utils
 import unittest
 from unittest.mock import patch
-from utils import access_nested_map, get_json
+from utils import access_nested_map, get_json, memoize
 from parameterized import parameterized
 
 
@@ -41,3 +41,26 @@ class TestGetJson(unittest.TestCase):
         """Mock test that utils.get_json returns expected result"""
         mock_get_json.return_value = resp
         self.assertEqual(get_json(url), resp)
+
+
+class TestMemoize(unittest.TestCase):
+    """TEST"""
+    def test_memoize(self):
+        """Test that when calling a_property twice,
+            the correct result is returned but
+            a_method is only called once using assert_called_once"""
+        class TestClass:
+            """Class"""
+            def a_method(self, mock_memoize):
+                """ method """
+                return 42
+
+            @memoize
+            def a_property(self):
+                """Memoized property"""
+                return self.a_method
+        with patch.object(TestClass, "a_method") as mock_a_method:
+            test_class = TestClass()
+            test_class.a_property
+            test_class.a_property
+            mock_a_method.assert_called_once
