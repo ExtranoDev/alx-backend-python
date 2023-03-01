@@ -44,13 +44,13 @@ class TestGetJson(unittest.TestCase):
 
 
 class TestMemoize(unittest.TestCase):
-    """TEST"""
+    """ TEST Memoization """
     def test_memoize(self):
         """Test that when calling a_property twice,
             the correct result is returned but
             a_method is only called once using assert_called_once"""
         class TestClass:
-            """Class"""
+            """ class """
             def a_method(self, mock_memoize):
                 """ method """
                 return 42
