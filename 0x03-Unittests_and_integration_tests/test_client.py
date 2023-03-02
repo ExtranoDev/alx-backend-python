@@ -71,13 +71,13 @@ class TestGithubOrgClient(unittest.TestCase):
     TEST_PAYLOAD
 )
 class TestIntegrationGithubOrgClient(unittest.TestCase):
-    """Integration test: fixtures"""
+    """ Integration test: fixtures """
     @classmethod
     def setUpClass(cls):
-        """mock function to return example payloads found in the fixtures"""
+        """ mock function to return example payloads found in the fixtures"""
         cls.get_patcher = patch('requests.get', side_effect=HTTPError)
 
     @classmethod
     def tearDownClas(cls):
-        """Stop Patcher"""
+        """ Stop Patcher """
         cls.get_patcher.stop()
