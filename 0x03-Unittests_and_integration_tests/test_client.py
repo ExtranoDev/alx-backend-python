@@ -66,8 +66,10 @@ class TestGithubOrgClient(unittest.TestCase):
         self.assertEqual(test_output, output)
 
 
-@parameterized_class(('org_payload', 'repos_payload',
-                     'expected_repos', 'apache2_repos'), TEST_PAYLOAD)
+@parameterized_class(
+    ('org_payload', 'repos_payload', 'expected_repos', 'apache2_repos'),
+    TEST_PAYLOAD
+)
 class TestIntegrationGithubOrgClient(unittest.TestCase):
     """Integration test: fixtures"""
     @classmethod
