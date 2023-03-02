@@ -4,6 +4,8 @@ import unittest
 from client import GithubOrgClient
 from unittest.mock import patch, PropertyMock
 from parameterized import parameterized
+from urllib.error import HTTPError
+from fixtures import TEST_PAYLOAD
 
 
 class TestGithubOrgClient(unittest.TestCase):
@@ -53,12 +55,27 @@ class TestGithubOrgClient(unittest.TestCase):
 
     @parameterized.expand([
                             ({"license": {"key": "my_license"}},
-                            "my_license", True),
+                             "my_license", True),
                             ({"license": {"key": "other_license"}},
-                            "my_license", False)
+                             "my_license", False)
                           ])
     def test_has_license(self, repo, license_key, output):
         """Test if License exists"""
         test_client = GithubOrgClient('google')
         test_output = test_client.has_license(repo, license_key)
         self.assertEqual(test_output, output)
+
+
+@parameterized_class(('org_payload', 'repos_payload',
+                     'expected_repos', 'apache2_repos'), TEST_PAYLOAD)
+class TestIntegrationGithubOrgClient(unittest.TestCase):
+    """Integration test: fixtures"""
+    @classmethod
+    def setUpClass(cls):
+        """mock function to return example payloads found in the fixtures"""
+        cls.get_patcher = patch('requests.get', side_effect=HTTPError)
+
+    @classmethod
+    def tearDownClas(cls):
+        """Stop Patcher"""
+        cls.get_patcher.stop()
