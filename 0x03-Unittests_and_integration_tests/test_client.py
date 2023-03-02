@@ -66,18 +66,30 @@ class TestGithubOrgClient(unittest.TestCase):
         self.assertEqual(test_output, output)
 
 
-@parameterized_class(
-    ("org_payload", "repos_payload", "expected_repos", "apache2_repos"),
-    TEST_PAYLOAD
-)
+@parameterized_class(("org_payload", "repos_payload",
+                     "expected_repos", "apache2_repos"),
+                     TEST_PAYLOAD)
 class TestIntegrationGithubOrgClient(unittest.TestCase):
-    """ Integration test: fixtures """
+    """ Integration test """
     @classmethod
     def setUpClass(cls):
-        """ mock function to return example payloads found in the fixtures"""
+        """ mock function to return example payloads
+        found in the fixtures"""
         cls.get_patcher = patch('requests.get', side_effect=HTTPError)
 
     @classmethod
     def tearDownClas(cls):
         """ Stop Patcher """
         cls.get_patcher.stop()
+
+    def test_public_repos(self):
+        """Implement the test_public_repos method to test
+        GithubOrgClient.public_repos"""
+        test_class = GithubOrgClient('google')
+        assert True
+
+    def test_public_repos_with_license(self):
+        """Implement test_public_repos_with_license to
+        test the public_repos"""
+        test_class = GithubOrgClient('google')
+        assert True
