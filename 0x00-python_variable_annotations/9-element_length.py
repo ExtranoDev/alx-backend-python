@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-""""""
+""""duck type an iterable object"""
 from typing import Tuple, List, Iterable, Sequence
 
 
