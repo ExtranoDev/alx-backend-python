@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Handles Tasks"""
-import asyncioi
+import asyncio
 from typing import List
 
 task_wait_random = __import__('3-tasks').task_wait_random
